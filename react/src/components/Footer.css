@@ -1,0 +1,29 @@
+.footer {
+    color: rgb(0, 0, 0);
+    padding: 20px 0px 20px 0px;
+    bottom: 0;
+    width: 80%;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+}
+
+.social-icons {
+    margin-bottom: 8px;
+}
+
+.icon {
+    font-size: 20px;
+    margin: 0 10px;
+    color: rgb(0, 0, 0);
+    transition: color 0.3s;
+}
+
+.icon:hover {
+    color: #85bd42;
+}
+
+.copyright {
+    font-size: 12px;
+    margin: auto;
+}

@@ -1,0 +1,29 @@
+.explore-wrapper {
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.explore-wrapper>h3 {
+    margin: 0;
+    padding: 20px 0 10px 0;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 35px;
+    width: 100%;
+    margin: auto;
+}
+
+.not-found {
+    text-align: center;
+    margin-top: 150px;
+    font-size: 16.5px
+}
+
+.not-found>img {
+    width: 120px;
+    height: 120px;
+}
