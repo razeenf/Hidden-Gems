@@ -16,7 +16,7 @@ app.use(cors());
 const generateImageId = (bytes = 32) =>
   crypto.randomBytes(bytes).toString("hex");
 
-// api endpoint to get first 5 posts that match
+// api endpoint to get first 5 latest posts
 app.get("/api/posts", async (req, res) => {
   const posts = await prisma.post.findMany({
     orderBy: { createdAt: "desc" }, // sort by createdAt in descending order so newest posts are first
@@ -48,6 +48,25 @@ app.get("/api/posts/:cityName", async (req, res) => {
     res.send(posts);
   } else {
     res.send([]);
+  }
+});
+
+// api endpoint to check for new posts
+app.get("/api/posts/new/:id", async (req, res) => {
+  const currentId = parseInt(req.params.id, 10);
+
+  const posts = await prisma.post.findMany({
+    orderBy: { id: "desc" }, // sort by id in descending order so newest posts are first
+    where: { id: { gt: currentId } }, // only get posts with id greater than currentId
+  });
+
+  for (let post of posts) {
+    console.log("called s3");
+    post.imageUrl = await getObjectSignedUrl(post.imageId);
+  }
+
+  if (posts.length > 0) {
+    res.send(posts);
   }
 });
 

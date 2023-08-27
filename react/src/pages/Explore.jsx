@@ -20,6 +20,30 @@ export default function Explore() {
     }
   }
 
+  async function checkForNewPosts(id) {
+    console.log(id);
+    const result = await axios.get("http://localhost:8080/api/posts/new/" + id);
+    const posts = result.data;
+    if(posts.length > 0) {
+      console.log("new post received");
+      const cachedExploreData = JSON.parse(localStorage.getItem('exploreData'));
+      for (const post of posts.reverse()) {
+        cachedExploreData.unshift(post);
+        if (cachedExploreData.length > 5) {
+          cachedExploreData.pop();
+        }
+        //
+        const cachedCityData = JSON.parse(localStorage.getItem('queriedData-' + post.city.toLowerCase()));
+        if (cachedCityData) {
+          cachedCityData.unshift(post);
+          localStorage.setItem('queriedData-' + post.city.toLowerCase(), JSON.stringify(cachedCityData));
+        }
+      }
+      localStorage.setItem('exploreData', JSON.stringify(cachedExploreData));
+      setData(cachedExploreData);
+      }
+  };
+
   useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
@@ -28,11 +52,12 @@ export default function Explore() {
     const cachedData = localStorage.getItem('exploreData');
     if (cachedData) {
       setData(JSON.parse(cachedData));
-      console.log("state updated 2");
+      const id = JSON.parse(cachedData)[0].id;
+      checkForNewPosts(id);
     } else {
       getPosts();
     }
-  }, []);
+}, []);
 
   return (
     <>
@@ -97,7 +122,6 @@ function SearchResult({ city }) {
   }, [city]);
 
   async function getPosts() {
-    console.log("getting q posts from api")
       const result = await axios.get("http://localhost:8080/api/posts/" + city);
       if (result.data.length > 0) {
         setQueriedData(result.data); // if result.data is not empty, set state

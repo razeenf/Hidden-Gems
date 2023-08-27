@@ -21,7 +21,7 @@ root.render(
               <Route path="/explore" element={<Explore />} />
               <Route path="/share" element={<Share />} />
           </Routes>
-          {/* <Footer /> */}
+          <Footer />
         </div>
     </BrowserRouter>
   </React.StrictMode>

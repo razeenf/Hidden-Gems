@@ -24,9 +24,7 @@
     background-color: #c8d4c4a4;
     padding: 15px 0px;
     backdrop-filter: blur(10px);
-    /* Adjust the blur radius as needed */
     -webkit-backdrop-filter: blur(10px);
-    /* For compatibility with some browsers */
 }
 
 .card-name {
@@ -74,7 +72,7 @@
     background-size: cover;
     background-position: center;
     border-radius: 15px 0 0 15px;
-    width: 600px;
+    width: 125rem;
 }
 
 .modal-info {
