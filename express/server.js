@@ -16,30 +16,40 @@ app.use(cors());
 const generateImageId = (bytes = 32) =>
   crypto.randomBytes(bytes).toString("hex");
 
-// api endpoint to get all posts
+// api endpoint to get first 5 posts that match
 app.get("/api/posts", async (req, res) => {
   const posts = await prisma.post.findMany({
-    orderBy: [{ createdAt: "desc" }],
+    orderBy: { createdAt: "desc" }, // sort by createdAt in descending order so newest posts are first
+    take: 5,
   });
+
   for (let post of posts) {
     post.imageUrl = await getObjectSignedUrl(post.imageId);
+    console.log("called s3");
   }
   res.send(posts);
 });
 
-// // api endpoint to get quried posts
-// app.get("/api/posts/:id", async (req, res) => {
-//   const id = +req.params.id;
-//   const posts = await prisma.posts.findMany(
-//     { where: { id } },
-//     { orderBy: [{ created: "desc" }] }
-//   );
+// api endpoint to get queried posts
+app.get("/api/posts/:cityName", async (req, res) => {
+  const city = req.params.cityName;
 
-//   for (let post of posts) {
-//     post.imageUrl = await getObjectSignedUrl(post.imageId);
-//   }
-//   res.send(posts);
-// });
+  const posts = await prisma.post.findMany({
+    where: { city: city.toLowerCase() },
+    orderBy: { createdAt: "desc" },
+  });
+
+  for (let post of posts) {
+    console.log("called s3");
+    post.imageUrl = await getObjectSignedUrl(post.imageId);
+  }
+
+  if (posts.length > 0) {
+    res.send(posts);
+  } else {
+    res.send([]);
+  }
+});
 
 // api endpoint to create a post
 app.post("/api/posts", upload.single("image"), async (req, res) => {
@@ -63,7 +73,7 @@ app.post("/api/posts", upload.single("image"), async (req, res) => {
     data: {
       name: name,
       address: address,
-      city: city,
+      city: city.toLowerCase(),
       category: category,
       description: description,
       imageId: imageId,

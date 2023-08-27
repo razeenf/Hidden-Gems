@@ -51,6 +51,24 @@ textarea.form-input {
     resize: none;
 }
 
+.upload-box {
+    text-align: center;
+    padding: 10px;
+    font-size: 13.5px;
+    background-color: #dee8da;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.form-input-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
 .form-button {
     background-color: #85bd42;
     padding: 10px;

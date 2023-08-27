@@ -103,7 +103,7 @@
     transition-duration: .1s;
 }
 
-.burger-dropdown {
+/*  .burger-dropdown {
     position: absolute;
     top: 80px;
     background-image: linear-gradient(#c8d4c4, #dee8da);
@@ -141,7 +141,7 @@
 .login-link:hover {
     color: #85bd42;
     cursor: pointer;
-}
+} */
 
 @media (max-width: 1290px) {
     .navbar {

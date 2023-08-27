@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import './Navbar.css';
 import logo from '../assets/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import './Navbar.css';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,21 +22,9 @@ export default function Navbar() {
       </div>
       <div className="navbar-middle">
         <ul className="nav-links">
-          <li>
-            <NavLink to="/" activeClassName="active-link">
-              HOME
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/explore" activeClassName="active-link">
-              EXPLORE
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/share" activeClassName="active-link">
-              SHARE
-            </NavLink>
-          </li>
+          <li><NavLink to="/" activeclassname="active-link">HOME</NavLink></li>
+          <li><NavLink to="/explore" activeclassname="active-link">EXPLORE</NavLink></li>
+          <li><NavLink to="/share" activeclassname="active-link">SHARE</NavLink></li>
         </ul>
       </div>
       <div className="navbar-right">
@@ -45,32 +33,24 @@ export default function Navbar() {
           <FontAwesomeIcon icon={faBars} className="burger-icon" />
         </div>
       </div>
-      {menuOpen && <BurgerMenu />}
+      {/* {menuOpen && <BurgerMenu />} */}
     </nav>
   );
 }
 
-function BurgerMenu() {
-  return (
-    <div className="burger-dropdown">
-      <ul className="burger-nav-links">
-        <li>
-          <NavLink to="/" activeClassName="active-link">
-            HOME
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/explore" activeClassName="active-link">
-            EXPLORE
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/share" activeClassName="active-link">
-            SHARE
-          </NavLink>
-        </li>
-        <li className='login-link'>LOGIN</li>
-      </ul>
-    </div>
-  );
-}
+// function BurgerMenu() {
+//   const handleNavLinkClick = () => {
+//     closeMenu(); // Close the menu when a NavLink is clicked
+//   };
+
+//   return (
+//     <div className="burger-dropdown">
+//       <ul className="burger-nav-links">
+//           <li><NavLink to="/" activeclassname="active-link" onClick={handleNavLinkClick}>HOME</NavLink></li>
+//           <li><NavLink to="/explore" activeclassname="active-link" onClick={handleNavLinkClick}>EXPLORE</NavLink></li>
+//           <li><NavLink to="/share" activeclassname="active-link" onClick={handleNavLinkClick}>SHARE</NavLink></li>
+//         <li className='login-link'>LOGIN</li>
+//       </ul>
+//     </div>
+//   );
+// }

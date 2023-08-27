@@ -1,33 +1,38 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import './Explore.css';
 import Card from '../components/Card';
 import SearchBar from "material-ui-search-bar";
 import axios from 'axios';
 import notFound from '../assets/notFound.png';
 
-export default function Explore({ cardData }) {
+export default function Explore() {
   const [searchValue, setSearchValue] = useState('');
-  const [showSearchResults, setShowSearchResults] = useState(false);
   const [data, setData] = useState([]);
-  const [hasFetchedData, setHasFetchedData] = useState(false);
-  
-  useEffect(() => {
-    async function getPosts() {
-      const result = await axios.get("http://localhost:8080/api/posts");
+  const [showSearchResults, setShowSearchResults] = useState(false);
+  const isMounted = useRef(false); // Create a ref to track component mount state
+
+  async function getPosts() {
+    const result = await axios.get("http://localhost:8080/api/posts");
+    if (result.data.length > 0) {
       setData(result.data);
-      setHasFetchedData(true);
+      console.log("state updated 1");
+      localStorage.setItem('exploreData', JSON.stringify(result.data));
     }
-  
-    if (!hasFetchedData) {
+  }
+
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+    const cachedData = localStorage.getItem('exploreData');
+    if (cachedData) {
+      setData(JSON.parse(cachedData));
+      console.log("state updated 2");
+    } else {
       getPosts();
     }
-  }, [hasFetchedData]);
-
-  const handleRequestSearch = () => {
-    if (searchValue !== '') {
-      setShowSearchResults(true);
-    }
-  };
+  }, []);
 
   return (
     <>
@@ -36,26 +41,35 @@ export default function Explore({ cardData }) {
           backgroundColor: '#dee8da',
           borderRadius: '15px',
           boxShadow: 'none',
-          width: '47%',
+          width: '80%',
           margin: 'auto',
           marginTop: '40px',
         }}
         placeholder='Enter a City'
-        onChange={(newValue) => setSearchValue(newValue)}
-        onRequestSearch={handleRequestSearch}
+        cancelOnEscape={true}
+        onRequestSearch={(newValue) => {
+          if (newValue !== '') {
+            setSearchValue(newValue),
+            setShowSearchResults(true);
+          }
+        }}
+        onCancelSearch={() => {
+          setSearchValue('');
+          setShowSearchResults(false);
+        }}
       />
       <div className='explore-wrapper'>
-        {showSearchResults ? (
-          <SearchResult cityName={searchValue}  />
+      {showSearchResults ? (
+          <SearchResult city={searchValue} />
         ) : (
           <>
             <h3>Gems Near You</h3>
             <div className="card-grid">
-              <Card cardData={cardData} />
+              <Card cardData={data} />
             </div>
             <h3>Recent Gems</h3>
             <div className="card-grid">
-              <Card cardData={cardData} />
+              <Card cardData={data} />
             </div>
           </>
         )}
@@ -64,22 +78,40 @@ export default function Explore({ cardData }) {
   );
 }
 
-function SearchResult({ cityName }) {
-  const [queriedData, setqueriedData] = useState([]);
-  
+function SearchResult({ city }) {
+  const [queriedData, setQueriedData] = useState([]);
+  const isMounted = useRef(false); // useRef to track mounting state
+
   useEffect(() => {
-    async function getPosts() {
-      // const result = await axios.get("/api/posts/" + cityName)
-      // setqueriedData(result.data)
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
     }
-    getPosts()
-  }, [])
+    const cachedData = localStorage.getItem('queriedData-' + city.toLowerCase());
+    if (cachedData) {
+      setQueriedData(JSON.parse(cachedData));
+      console.log("State updated 3");
+    } else {
+      getPosts();
+    }
+  }, [city]);
+
+  async function getPosts() {
+    console.log("getting q posts from api")
+      const result = await axios.get("http://localhost:8080/api/posts/" + city);
+      if (result.data.length > 0) {
+        setQueriedData(result.data); // if result.data is not empty, set state
+        localStorage.setItem('queriedData-' + city.toLowerCase(), JSON.stringify(result.data));
+      }else{
+        setQueriedData([]); // if result.data is empty, set state to empty array to clear previous search results
+      }
+  }
 
   if (queriedData.length === 0) {
     return (
       <div className='not-found'>
         <img src={notFound} />
-        <p>No gems found in {cityName}.</p>
+        <p>No gems found in {city}.</p>
       </div>
     )
   }

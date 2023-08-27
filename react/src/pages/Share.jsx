@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './Share.css'; 
-import axios from 'axios'
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 export default function FormPage() {
   const [name, setName] = useState('');
@@ -10,6 +12,7 @@ export default function FormPage() {
   const [description, setDescription] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -30,22 +33,15 @@ export default function FormPage() {
     formData.append('image', imageFile);
 
     // API call to the POST /posts endpoint
-    // await axios.post("http://localhost:8080/api/posts", formData, { headers: {'Content-Type': 'multipart/form-data'}})
-    //   .then(response => {
-    //     if (response.status === 200) {
-    //       setSubmitted(true);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log("An error occurred:", error);
-    //     setSubmitted(false);
-    //   });
-
-    // Reset form fields
-    
-    setSubmitted(true);
-    // Redirect to the home page
-    
+    await axios.post("http://localhost:8080/api/posts", formData, { headers: {'Content-Type': 'multipart/form-data'}})
+      .then(response => {
+        if (response.status === 201) {
+          setSubmitted(true);
+        }
+      })
+      .catch(error => {
+        console.log("An error occurred:", error);
+      });
   };
 
   return (
@@ -114,13 +110,20 @@ export default function FormPage() {
                 </label>
                 <label className="form-label">
                   Image:
-                  <input
-                    required
-                    type="file"
-                    accept="image/*"
-                    className="form-input"
-                    onChange={handleImageChange}
-                  />
+                  <div className="upload-box">
+                    {imageFile ? (
+                      <div>{imageFile.name}</div>
+                    ) : (
+                      <div><FontAwesomeIcon icon={faArrowUpFromBracket} style={{color: "#000000",}} />&nbsp;&nbsp;Upload</div>
+                    )}
+                    <input
+                      required
+                      type="file"
+                      accept="image/*"
+                      className="form-input-file"
+                      onChange={handleImageChange}
+                    />
+                  </div>
                 </label>
                 <button type="submit" className="form-button">
                   Submit
