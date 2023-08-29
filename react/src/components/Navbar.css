@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: space-between;
     color: black;
-    padding: 15px 0;
+    padding: 10px 0;
     z-index: 1000;
     position: fixed;
     width: 80%;
@@ -105,12 +105,12 @@
 
 .burger-dropdown {
     position: absolute;
-    top: 80px;
+    top: 65px;
     background-image: linear-gradient(#c8d4c4, #dee8da);
     background-color: #c8d4c4;
     padding: 10px 10px 0 10px;
     border-radius: 0 0 15px 15px;
-    width: 97%;
+    width: 98%;
 }
 
 .burger-nav-links {
@@ -142,10 +142,6 @@
 }
 
 @media (max-width: 1290px) {
-    .navbar {
-        padding: 20px 0;
-    }
-
     .site-name {
         font-size: 40px;
         cursor: pointer;
@@ -171,5 +167,30 @@
         display: block;
         cursor: pointer;
         padding: 10px;
+    }
+}
+
+@media (max-width: 800px) {
+    .site-name {
+        font-size: 30px;
+        cursor: pointer;
+        margin-top: 5px;
+    }
+
+    .navbar {
+        padding: 5px 0;
+    }
+
+    .logo {
+        width: 30px;
+    }
+
+    .burger-menu>svg {
+        width: 25px;
+    }
+
+    .burger-dropdown {
+        top: 50px;
+        width: 95%;
     }
 }
