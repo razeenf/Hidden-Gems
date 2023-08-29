@@ -12,7 +12,7 @@ export default function Explore() {
   const isMounted = useRef(false); // Create a ref to track component mount state
 
   async function getPosts() {
-    const result = await axios.get("http://192.168.0.22:8080/api/posts");
+    const result = await axios.get("/api/posts");
     if (result.data.length > 0) {
       setData(result.data);
       localStorage.setItem('exploreData', JSON.stringify(result.data));
@@ -20,7 +20,7 @@ export default function Explore() {
   }
 
   async function checkForNewPosts(id) {
-    const result = await axios.get("http://192.168.0.22:8080/api/posts/new/" + id);
+    const result = await axios.get("/api/posts/new/" + id);
     const posts = result.data;
     if(posts.length > 0) {
       const cachedExploreData = JSON.parse(localStorage.getItem('exploreData'));
@@ -118,7 +118,7 @@ function SearchResult({ city }) {
   }, [city]);
 
   async function getPosts() {
-      const result = await axios.get("http://192.168.0.22:8080/api/posts/" + city);
+      const result = await axios.get("/api/posts/" + city);
       if (result.data.length > 0) {
         setQueriedData(result.data); // if result.data is not empty, set state
         localStorage.setItem('queriedData-' + city.toLowerCase(), JSON.stringify(result.data));

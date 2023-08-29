@@ -33,7 +33,7 @@ export default function FormPage() {
     formData.append('image', imageFile);
 
     // API call to the POST /posts endpoint
-    await axios.post("http://localhost:8080/api/posts", formData, { headers: {'Content-Type': 'multipart/form-data'}})
+    await axios.post("/api/posts", formData, { headers: {'Content-Type': 'multipart/form-data'}})
       .then(response => {
         if (response.status === 201) {
           setSubmitted(true);
