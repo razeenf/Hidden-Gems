@@ -15,17 +15,14 @@ export default function Explore() {
     const result = await axios.get("http://localhost:8080/api/posts");
     if (result.data.length > 0) {
       setData(result.data);
-      console.log("state updated 1");
       localStorage.setItem('exploreData', JSON.stringify(result.data));
     }
   }
 
   async function checkForNewPosts(id) {
-    console.log(id);
     const result = await axios.get("http://localhost:8080/api/posts/new/" + id);
     const posts = result.data;
     if(posts.length > 0) {
-      console.log("new post received");
       const cachedExploreData = JSON.parse(localStorage.getItem('exploreData'));
       for (const post of posts.reverse()) {
         cachedExploreData.unshift(post);
@@ -115,7 +112,6 @@ function SearchResult({ city }) {
     const cachedData = localStorage.getItem('queriedData-' + city.toLowerCase());
     if (cachedData) {
       setQueriedData(JSON.parse(cachedData));
-      console.log("State updated 3");
     } else {
       getPosts();
     }

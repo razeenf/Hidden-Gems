@@ -67,6 +67,8 @@ app.get("/api/posts/new/:id", async (req, res) => {
 
   if (posts.length > 0) {
     res.send(posts);
+  } else {
+    res.send([]);
   }
 });
 

@@ -51,7 +51,7 @@ export async function getObjectSignedUrl(imageName) {
   };
 
   const command = new GetObjectCommand(params);
-  const url = await getSignedUrl(s3Client, command, { expiresIn: 3600 }); // 1 hour
+  const url = await getSignedUrl(s3Client, command, { expiresIn: 86400 });
 
   return url;
 }
