@@ -14,5 +14,6 @@ body {
 }
 
 .wrapper {
-    padding: 100px 0 150px 0;
+    min-height: calc(100vh - 170px);
+    padding: 100px 0 0 0;
 }

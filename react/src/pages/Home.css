@@ -120,6 +120,12 @@
         justify-content: center;
     }
 
+    .imgs img {
+        margin: 10px;
+        width: 200px;
+        height: 200px;
+    }
+
     .imgs .img:nth-child(2) {
         margin-top: -40px;
         margin-left: -80px;
@@ -135,6 +141,14 @@
 
     .intro {
         text-align: center;
+    }
+
+    .intro h1 {
+        font-size: 34px;
+    }
+
+    .intro p {
+        font-size: 15px;
     }
 
 }

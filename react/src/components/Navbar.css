@@ -103,15 +103,13 @@
     transition-duration: .1s;
 }
 
-/*  .burger-dropdown {
+.burger-dropdown {
     position: absolute;
     top: 80px;
     background-image: linear-gradient(#c8d4c4, #dee8da);
     background-color: #c8d4c4;
     padding: 10px 10px 0 10px;
     border-radius: 0 0 15px 15px;
-    box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.2);
-    z-index: 1;
     width: 97%;
 }
 
@@ -141,7 +139,7 @@
 .login-link:hover {
     color: #85bd42;
     cursor: pointer;
-} */
+}
 
 @media (max-width: 1290px) {
     .navbar {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +11,20 @@ export default function Navbar() {
   const handleMenuClick = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1290) { // Adjust the threshold as needed
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <nav className="navbar">
@@ -32,25 +46,25 @@ export default function Navbar() {
         <div className={`burger-menu ${menuOpen ? 'active' : ''}`} onClick={handleMenuClick}>
           <FontAwesomeIcon icon={faBars} className="burger-icon" />
         </div>
+        {menuOpen && <BurgerMenu />}
       </div>
-      {/* {menuOpen && <BurgerMenu />} */}
     </nav>
   );
 }
 
-// function BurgerMenu() {
-//   const handleNavLinkClick = () => {
-//     closeMenu(); // Close the menu when a NavLink is clicked
-//   };
+function BurgerMenu() {
+  const handleNavLinkClick = () => {
+    closeMenu();
+  };
 
-//   return (
-//     <div className="burger-dropdown">
-//       <ul className="burger-nav-links">
-//           <li><NavLink to="/" activeclassname="active-link" onClick={handleNavLinkClick}>HOME</NavLink></li>
-//           <li><NavLink to="/explore" activeclassname="active-link" onClick={handleNavLinkClick}>EXPLORE</NavLink></li>
-//           <li><NavLink to="/share" activeclassname="active-link" onClick={handleNavLinkClick}>SHARE</NavLink></li>
-//         <li className='login-link'>LOGIN</li>
-//       </ul>
-//     </div>
-//   );
-// }
+  return (
+    <div className="burger-dropdown">
+      <ul className="burger-nav-links">
+          <li><NavLink to="/" activeclassname="active-link" onClick={handleNavLinkClick}>HOME</NavLink></li>
+          <li><NavLink to="/explore" activeclassname="active-link" onClick={handleNavLinkClick}>EXPLORE</NavLink></li>
+          <li><NavLink to="/share" activeclassname="active-link" onClick={handleNavLinkClick}>SHARE</NavLink></li>
+        <li className='login-link'>LOGIN</li>
+      </ul>
+    </div>
+  );
+}

@@ -52,7 +52,7 @@
     background-color: #c8d4c4;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 60%;
+    width: 60%;
     height: 80%;
 }
 
@@ -118,6 +118,12 @@
 }
 
 @media (max-width: 800px) {
+    .modal {
+        max-width: 300px;
+        min-width: 300px;
+        height: 80%;
+    }
+
     .modal-content {
         flex-direction: column;
         text-align: center;
