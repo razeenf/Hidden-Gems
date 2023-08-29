@@ -17,3 +17,9 @@ body {
     min-height: calc(100vh - 170px);
     padding: 100px 0 0 0;
 }
+
+@media (max-width: 800px) {
+    .wrapper {
+        padding: 70px 0 0 0;
+    }
+}
