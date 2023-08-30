@@ -84,6 +84,7 @@ app.post("/api/posts", upload.single("image"), async (req, res) => {
 
   const fileBuffer = await sharp(file.buffer)
     .resize({ height: 550, width: 600, fit: "cover" })
+    .jpg({ quality: 90 })
     .jpeg({ quality: 90 })
     .png({ compressionLevel: 9 })
     .toBuffer();
