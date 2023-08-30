@@ -85,10 +85,10 @@ export default function Explore() {
           <SearchResult city={searchValue} />
         ) : (
           <>
-            <h3>Gems Near You</h3>
+            {/* <h3>Gems Near You</h3>
             <div className="card-grid">
               <Card cardData={data} />
-            </div>
+            </div> */}
             <h3>Recent Gems</h3>
             <div className="card-grid">
               <Card cardData={data} />
