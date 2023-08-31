@@ -91,3 +91,26 @@ textarea.form-input {
 .submit-res>* {
     margin: 5px auto;
 }
+
+.swal-modal {
+    border: none;
+    color: black;
+    max-width: 80%;
+}
+
+.swal-text,
+.swal-title {
+    color: black;
+}
+
+.swal-button {
+    background-color: #85bd42;
+    font-size: 12px;
+    border: none;
+    color: black;
+    border-color: none;
+}
+
+.swal-footer {
+    text-align: center;
+}
