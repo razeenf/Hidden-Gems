@@ -114,7 +114,7 @@ export default function FormPage() {
                     {imageFile ? (
                       <div>{imageFile.name}</div>
                     ) : (
-                      <div><FontAwesomeIcon icon={faArrowUpFromBracket} style={{color: "#000000",}} />&nbsp;&nbsp;Upload</div>
+                      <div><FontAwesomeIcon icon={faArrowUpFromBracket} style={{color: "#000000",}} />&nbsp;&nbsp;Upload (Max 4MB)</div>
                     )}
                     <input
                       required
