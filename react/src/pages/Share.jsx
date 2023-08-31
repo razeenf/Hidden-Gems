@@ -32,8 +32,13 @@ export default function FormPage() {
     formData.append('description', description);
     formData.append('image', imageFile);
 
+    const axiosConfig = {
+      maxContentLength: 10000000, 
+      maxBodyLength: 10000000,   
+    };
+
     // API call to the POST /posts endpoint
-    await axios.post("/api/posts", formData, { headers: {'Content-Type': 'multipart/form-data'}})
+    await axios.post("/api/posts", formData, { headers: {'Content-Type': 'multipart/form-data'}}, axiosConfig)
       .then(response => {
         if (response.status === 201) {
           setSubmitted(true);
