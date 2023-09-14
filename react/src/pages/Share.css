@@ -26,7 +26,8 @@
 }
 
 .form-input:focus {
-    outline: none;
+    outline-style: solid;
+    outline-color: #85bd42;
 }
 
 select.form-input {
@@ -58,6 +59,7 @@ textarea.form-input {
     background-color: #dee8da;
     display: inline-block;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 .form-input-file {
@@ -74,7 +76,7 @@ textarea.form-input {
     padding: 10px;
     border: none;
     border-radius: 8px;
-    width: 160px;
+    width: 100%;
     margin: 20px auto;
     cursor: pointer;
 }

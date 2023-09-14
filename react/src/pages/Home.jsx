@@ -13,19 +13,19 @@ export default function Home() {
 
   return (
     <>
-    <div className="parent">
+      <div className="parent">
         <div className="intro">
-            <h1>The best spots are often hiding!</h1>
-            <p>We don't gatekeep around here, explore the coolest hidden gems in your city and feel free to share your favorite gems with the world!</p>
-            <button className="explore-button" onClick={handleButtonClick}>Find Gems ➜</button>
+          <h1>The best spots are often hiding!</h1>
+          <p>We don't gatekeep around here, explore the coolest hidden gems in your city and feel free to share your favorite gems with the world!</p>
+          <button className="explore-button" onClick={handleButtonClick}>Find Gems ➜</button>
         </div>
 
         <div className="imgs">
-            <div className="img"><img src={img1}/></div>
-            <div className="img"><img src={img2}/></div>
-            <div className="img"><img src={img3}/></div>
+          <div className="img"><img src={img1} /></div>
+          <div className="img"><img src={img2} /></div>
+          <div className="img"><img src={img3} /></div>
         </div>
-    </div>
+      </div>
     </>
   );
 }

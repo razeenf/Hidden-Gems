@@ -9,15 +9,21 @@
     padding: 10px 0;
     z-index: 1000;
     position: fixed;
-    width: 80%;
+    width: 100%;
     margin: auto;
     background-color: #c8d4c4;
+}
+
+.navbar-scrolled {
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    /* You can adjust the values for the desired effect */
 }
 
 .navbar-left {
     display: flex;
     align-items: center;
     width: 350px;
+    padding-left: 10%;
 }
 
 .logo {
@@ -75,6 +81,7 @@
     width: 350px;
     display: flex;
     justify-content: flex-end;
+    padding-right: 10%;
 }
 
 .burger-menu {
@@ -110,7 +117,8 @@
     background-color: #c8d4c4;
     padding: 10px 10px 0 10px;
     border-radius: 0 0 15px 15px;
-    width: 98%;
+    width: 78%;
+
 }
 
 .burger-nav-links {
@@ -191,6 +199,6 @@
 
     .burger-dropdown {
         top: 50px;
-        width: 95%;
+
     }
 }

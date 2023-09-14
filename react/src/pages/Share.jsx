@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Share.css'; 
+import './Share.css';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,7 @@ export default function FormPage() {
     const file = event.target.files[0];
     setImageFile(file);
   };
-  
+
   const handleSubmit = async event => {
     event.preventDefault();
 
@@ -30,7 +30,7 @@ export default function FormPage() {
     formData.append('image', imageFile);
 
     // API call to the POST /posts endpoint
-    await axios.post("/api/posts", formData, { headers: {'Content-Type': 'multipart/form-data'}})
+    await axios.post("/api/posts", formData, { headers: { 'Content-Type': 'multipart/form-data' } })
       .then(response => {
         if (response.status === 201) {
           setSubmitted(true);
@@ -82,7 +82,7 @@ export default function FormPage() {
           <label className="form-label">
             Address:
             <input
-              required 
+              required
               type="text"
               className="form-input"
               value={address}
@@ -92,9 +92,10 @@ export default function FormPage() {
           <label className="form-label">
             City:
             <input
-              required 
+              required
               type="text"
               className="form-input"
+              placeholder="e.g. Toronto"
               value={city}
               onChange={(e) => setCity(e.target.value)}
             />
@@ -131,7 +132,7 @@ export default function FormPage() {
             {imageFile ? (
               <div>{imageFile.name}</div>
             ) : (
-              <div><FontAwesomeIcon icon={faArrowUpFromBracket} style={{color: "#000000"}} />&nbsp;&nbsp;Upload (Max 4MB)</div>
+              <div><FontAwesomeIcon icon={faArrowUpFromBracket} style={{ color: "#000000" }} />&nbsp;&nbsp;Upload (Max 4MB)</div>
             )}
             <input
               required

@@ -22,7 +22,7 @@ export default function Explore() {
   async function checkForNewPosts(id) {
     const result = await axios.get("/api/posts/new/" + id);
     const posts = result.data;
-    if(posts.length > 0) {
+    if (posts.length > 0) {
       const cachedExploreData = JSON.parse(localStorage.getItem('exploreData'));
       for (const post of posts.reverse()) {
         cachedExploreData.unshift(post);
@@ -38,59 +38,89 @@ export default function Explore() {
       }
       localStorage.setItem('exploreData', JSON.stringify(cachedExploreData));
       setData(cachedExploreData);
-      }
+    }
   };
+
+  // useEffect(() => {
+  //   if (!isMounted.current) {
+  //     isMounted.current = true;
+  //     return;
+  //   }
+
+  //   const storedData = localStorage.getItem('exploreData');
+
+  //   if (storedData) {
+  //     const storedData = JSON.parse(storedData);
+
+  //     // Check if the stored data has an expiration timestamp
+  //     if (storedData.expiration && new Date().getTime() >= storedData.expiration) {
+  //       // Data is expired, call getPosts to fetch new data
+  //       getPosts();
+  //     } else {
+  //       // Data is still valid, use it
+  //       setData(storedData);
+  //       const id = storedData[0].id;
+  //       checkForNewPosts(id);
+  //     }
+  //   } else {
+  //     // No cached data found, call getPosts to fetch data
+  //     getPosts();
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
       return;
     }
-    const cachedData = localStorage.getItem('exploreData');
-    if (cachedData) {
-      setData(JSON.parse(cachedData));
-      const id = JSON.parse(cachedData)[0].id;
+    const storedData = localStorage.getItem('exploreData');
+    if (storedData) {
+      setData(JSON.parse(storedData));
+      const id = JSON.parse(storedData)[0].id;
       checkForNewPosts(id);
     } else {
       getPosts();
     }
-}, []);
+  }, []);
 
   return (
     <>
-      <SearchBar
-        style={{
-          backgroundColor: '#dee8da',
-          borderRadius: '15px',
-          boxShadow: 'none',
-          width: '80%',
-          margin: 'auto',
-          marginTop: '40px',
-        }}
-        placeholder='Enter a City'
-        cancelOnEscape={true}
-        onRequestSearch={(newValue) => {
-          if (newValue !== '') {
-            setSearchValue(newValue),
-            setShowSearchResults(true);
-          }
-        }}
-        onCancelSearch={() => {
-          setSearchValue('');
-          setShowSearchResults(false);
-        }}
-      />
       <div className='explore-wrapper'>
-      {showSearchResults ? (
+        <SearchBar
+          style={{
+            backgroundColor: '#dee8da',
+            borderRadius: '15px',
+            boxShadow: 'none',
+            width: '100%',
+            margin: '40px auto',
+          }}
+          placeholder='Enter a City'
+          cancelOnEscape={true}
+          onRequestSearch={(newValue) => {
+            if (newValue !== '') {
+              setSearchValue(newValue),
+                setShowSearchResults(true);
+            }
+          }}
+          onCancelSearch={() => {
+            setSearchValue('');
+            setShowSearchResults(false);
+          }}
+        />
+        {showSearchResults ? (
           <SearchResult city={searchValue} />
         ) : (
           <>
-            {/* <h3>Gems Near You</h3>
-            <div className="card-grid">
-              <Card cardData={data} />
-            </div> */}
             <h3>Recent Gems</h3>
-            <div className="card-grid">
+            <div className="explore-card-grid">
+              <Card cardData={data} />
+            </div>
+            <h3>Gems Near You</h3>
+            <div className="explore-card-grid">
+              <Card cardData={data} />
+            </div>
+            <h3>Popular Gems</h3>
+            <div className="explore-card-grid">
               <Card cardData={data} />
             </div>
           </>
@@ -109,22 +139,22 @@ function SearchResult({ city }) {
       isMounted.current = true;
       return;
     }
-    const cachedData = localStorage.getItem('queriedData-' + city.toLowerCase());
-    if (cachedData) {
-      setQueriedData(JSON.parse(cachedData));
+    const storedData = localStorage.getItem('queriedData-' + city.toLowerCase());
+    if (storedData) {
+      setQueriedData(JSON.parse(storedData));
     } else {
       getPosts();
     }
   }, [city]);
 
   async function getPosts() {
-      const result = await axios.get("/api/posts/" + city);
-      if (result.data.length > 0) {
-        setQueriedData(result.data); // if result.data is not empty, set state
-        localStorage.setItem('queriedData-' + city.toLowerCase(), JSON.stringify(result.data));
-      }else{
-        setQueriedData([]); // if result.data is empty, set state to empty array to clear previous search results
-      }
+    const result = await axios.get("/api/posts/" + city);
+    if (result.data.length > 0) {
+      setQueriedData(result.data); // if result.data is not empty, set state
+      localStorage.setItem('queriedData-' + city.toLowerCase(), JSON.stringify(result.data));
+    } else {
+      setQueriedData([]); // if result.data is empty, set state to empty array to clear previous search results
+    }
   }
 
   if (queriedData.length === 0) {
@@ -139,7 +169,7 @@ function SearchResult({ city }) {
   return (
     <>
       <h3>&nbsp;</h3>
-      <div className="card-grid">
+      <div className="search-card-grid">
         <Card cardData={queriedData} />
       </div>
     </>

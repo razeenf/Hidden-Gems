@@ -5,11 +5,33 @@
 }
 
 .explore-wrapper>h3 {
+    font-size: 20px;
+    font-weight: 600;
     margin: 0;
-    padding: 20px 0 10px 0;
+    padding: 0;
 }
 
-.card-grid {
+.explore-card-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(200px, 1fr));
+    gap: 35px;
+    max-width: 100%;
+    overflow-x: scroll;
+    margin-bottom: 25px;
+    padding: 5px 0;
+}
+
+/* horizontal grid scrollbar */
+.explore-card-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+.explore-card-grid::-webkit-scrollbar-thumb {
+    background-color: #dee8da;
+    border-radius: 15px;
+}
+
+.search-card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 35px;
@@ -19,11 +41,17 @@
 
 .not-found {
     text-align: center;
-    margin-top: 150px;
+    padding: 120px 0px;
     font-size: 16.5px
 }
 
 .not-found>img {
     width: 120px;
     height: 120px;
+}
+
+@media (max-width: 1290px) {
+    .explore-wrapper {
+        width: 100%;
+    }
 }

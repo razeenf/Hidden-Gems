@@ -1,0 +1,71 @@
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 95vb;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 15px 0px;
+}
+
+/* Style for the login box */
+.login-box {
+    width: 300px;
+    padding: 20px 30px;
+    border-radius: 15px;
+    text-align: center;
+    background-color: #dee8da;
+}
+
+/* Style for the input fields */
+.login-input {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-field {
+    width: 92.5%;
+    padding: 10px;
+    background-color: #dee8da;
+    border: 1px solid #ccd4ca;
+    border-radius: 4px;
+}
+
+.input-field:focus {
+    outline-style: solid;
+    outline-color: #85bd42;
+}
+
+/* Style for the signup link */
+.switch-link {
+    margin-top: 20px;
+    font-size: smaller;
+}
+
+.switch-link a {
+    text-decoration: none;
+    color: #007bff;
+
+}
+
+.switch-link a:hover {
+    text-decoration: underline;
+}
+
+.google-login-button {
+    width: 100%;
+    justify-content: center;
+    color: #007bff;
+}
+
+h4 {
+    margin: 15px auto;
+    font-weight: 100;
+    color: #585858af;
+}

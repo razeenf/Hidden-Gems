@@ -8,18 +8,20 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    max-width: 80%;
+    max-width: 100%;
     margin: 0 auto;
     background-color: #c8d4c4;
 }
 
-.wrapper {
-    min-height: calc(100vh - 170px);
+.content {
+    min-height: calc(100vh - 192px);
     padding: 100px 0 0 0;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 @media (max-width: 800px) {
-    .wrapper {
+    .content {
         padding: 70px 0 0 0;
     }
 }
