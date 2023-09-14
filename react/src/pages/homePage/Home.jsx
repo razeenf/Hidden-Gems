@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import './Home.css';
-import img1 from '../assets/img1.png';
-import img2 from '../assets/img2.png';
-import img3 from '../assets/img3.png';
+import img1 from '../../assets/img1.png';
+import img2 from '../../assets/img2.png';
+import img3 from '../../assets/img3.png';
 
 export default function Home() {
   const navigate = useNavigate();

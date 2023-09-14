@@ -1,4 +1,4 @@
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 import './LoginPage.css';
 import { useState } from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';

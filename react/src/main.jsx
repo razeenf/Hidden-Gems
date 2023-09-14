@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import "./main.css";
 
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Explore from "./pages/Explore";
-import Share from "./pages/Share.jsx";
-import LoginPage from "./pages/LoginPage";
+import Navbar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
+import Home from "./pages/homePage/Home";
+import Explore from "./pages/explorePage/Explore";
+import Share from "./pages/sharePage/Share.jsx";
+import LoginPage from "./pages/loginPage/LoginPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

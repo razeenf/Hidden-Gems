@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from 'react'
 import './Explore.css';
-import Card from '../components/Card';
+import Card from '../../components/card/Card';
 import SearchBar from "material-ui-search-bar";
 import axios from 'axios';
-import notFound from '../assets/notFound.png';
+import notFound from '../../assets/notFound.png';
 
 export default function Explore() {
   const [searchValue, setSearchValue] = useState('');
