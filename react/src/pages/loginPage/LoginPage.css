@@ -3,7 +3,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 95vb;
+    height: 85vb;
+    margin-top: 30px
 }
 
 .header {

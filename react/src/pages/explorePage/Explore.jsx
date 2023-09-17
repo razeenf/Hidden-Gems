@@ -157,21 +157,21 @@ function SearchResult({ city }) {
     }
   }
 
-  if (queriedData.length === 0) {
-    return (
-      <div className='not-found'>
-        <img src={notFound} />
-        <p>No gems found in {city}.</p>
-      </div>
-    )
-  }
-
   return (
     <>
-      <h3>&nbsp;</h3>
-      <div className="search-card-grid">
-        <Card cardData={queriedData} />
-      </div>
+      {queriedData.length === 0 ? (
+        <div className='not-found'>
+          <img src={notFound} alt="Not Found" />
+          <p>No gems found in {city}.</p>
+        </div>
+      ) : (
+        <>
+          <div className="search-card-grid">
+            <Card cardData={queriedData} />
+          </div>
+        </>
+      )}
     </>
   );
+
 }

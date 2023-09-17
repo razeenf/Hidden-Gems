@@ -20,7 +20,7 @@ export default function Navbar() {
 
   // Function to handle scroll event
   const handleScroll = () => {
-    if (window.scrollY > 30) {
+    if (window.scrollY > 45) {
       setScrolled(true);
     } else {
       setScrolled(false);

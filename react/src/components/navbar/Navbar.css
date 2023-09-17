@@ -6,7 +6,6 @@
     align-items: center;
     justify-content: space-between;
     color: black;
-    padding: 10px 0;
     z-index: 1000;
     position: fixed;
     width: 100%;
@@ -15,7 +14,9 @@
 }
 
 .navbar-scrolled {
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); */
+    background-color: #dee8da;
+
     /* You can adjust the values for the desired effect */
 }
 
@@ -23,11 +24,11 @@
     display: flex;
     align-items: center;
     width: 350px;
-    padding-left: 10%;
+    padding-left: 35px;
 }
 
 .logo {
-    width: 45px;
+    width: 35px;
     height: auto;
     margin-right: 10px;
     transform: rotate(-30deg) scale(-1, 1);
@@ -37,7 +38,7 @@
     font-weight: lighter;
     text-decoration: none;
     display: flex;
-    font-size: 50px;
+    font-size: 45px;
     margin-bottom: 15px;
     color: #85bd42;
     font-family: 'Darumadrop One', cursive;
@@ -81,7 +82,7 @@
     width: 350px;
     display: flex;
     justify-content: flex-end;
-    padding-right: 10%;
+    padding-right: 35px;
 }
 
 .burger-menu {
@@ -113,8 +114,7 @@
 .burger-dropdown {
     position: absolute;
     top: 65px;
-    background-image: linear-gradient(#c8d4c4, #dee8da);
-    background-color: #c8d4c4;
+    background-color: #dee8da;
     padding: 10px 10px 0 10px;
     border-radius: 0 0 15px 15px;
     width: 78%;
@@ -178,7 +178,7 @@
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 500px) {
     .site-name {
         font-size: 30px;
         cursor: pointer;
@@ -186,11 +186,19 @@
     }
 
     .navbar {
-        padding: 5px 0;
+        padding-top: 5px;
+    }
+
+    .navbar-left {
+        padding-left: 15px;
+    }
+
+    .navbar-right {
+        padding-right: 15px;
     }
 
     .logo {
-        width: 30px;
+        width: 25px;
     }
 
     .burger-menu>svg {
@@ -199,6 +207,5 @@
 
     .burger-dropdown {
         top: 50px;
-
     }
 }

@@ -1,0 +1,67 @@
+/* Style for the header */
+
+
+/* Style for the user profile container */
+.user-profile {
+    margin: 0 auto;
+    width: auto;
+
+}
+
+/* Style for the profile header */
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-header h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+/* Style for the tab navigation */
+.tab-navigation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.tab-navigation button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-navigation button.active {
+    border-color: #85bd42;
+}
+
+/* Style for user posts and saved posts */
+.tab-content>div {
+    display: none;
+}
+
+.tab-content.active>div {
+    display: block;
+}
+
+.user-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 250px));
+    gap: 35px;
+    width: auto;
+    margin: auto;
+    justify-content: center;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 800px) {
+    .user-card-grid {
+        grid-template-columns: repeat(1, minmax(200px, 0.9fr));
+        /* Change to 1 column on smaller screens */
+    }
+}
