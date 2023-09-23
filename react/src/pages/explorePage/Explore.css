@@ -1,7 +1,6 @@
 .explore-wrapper {
     width: 80%;
     margin: auto;
-    margin-top: 10px;
 }
 
 .explore-wrapper>h3 {
@@ -19,6 +18,12 @@
     overflow-x: scroll;
     margin-bottom: 25px;
     padding: 5px 0;
+}
+
+.location-off {
+    text-align: center;
+    margin-top: 100px;
+    height: 100px;
 }
 
 /* horizontal grid scrollbar */

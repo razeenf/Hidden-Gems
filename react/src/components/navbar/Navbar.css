@@ -112,32 +112,39 @@
 }
 
 .burger-dropdown {
-    position: absolute;
-    top: 65px;
+    position: fixed;
+    top: 0;
+    right: 100px;
+    /* Initially hidden outside the viewport */
+    width: 250px;
+    text-align: center;
+    height: 100%;
     background-color: #dee8da;
-    padding: 10px 10px 0 10px;
-    border-radius: 0 0 15px 15px;
-    width: 78%;
-
+    /* Background color of the menu */
+    padding-top: 60px;
+    /* Adjust as needed */
+    z-index: 1000;
+    /* Ensure it's on top of other content */
+    transition: right 0.3s ease;
+    /* Transition for sliding animation */
 }
 
 .burger-nav-links {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    list-style: none;
+    list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
 .burger-nav-links li {
-    font-size: 16px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-.burger-nav-links li a {
+.burger-nav-links a {
     text-decoration: none;
-    color: #333;
+    font-size: 18px;
+    padding: 10px 20px;
+    display: block;
+    color: black;
 }
 
 .burger-nav-links li a:hover {
@@ -205,7 +212,5 @@
         width: 25px;
     }
 
-    .burger-dropdown {
-        top: 50px;
-    }
+
 }

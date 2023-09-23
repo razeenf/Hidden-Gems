@@ -87,7 +87,7 @@ function BurgerMenu() {
         <li><NavLink to="/" activeclassname="active-link" onClick={handleNavLinkClick}>HOME</NavLink></li>
         <li><NavLink to="/explore" activeclassname="active-link" onClick={handleNavLinkClick}>EXPLORE</NavLink></li>
         <li><NavLink to="/share" activeclassname="active-link" onClick={handleNavLinkClick}>SHARE</NavLink></li>
-        <li className='login-link'>LOGIN</li>
+        <li><NavLink to="/user/login" activeclassname="active-link" onClick={handleNavLinkClick}>LOGIN</NavLink></li>
       </ul>
     </div>
   );

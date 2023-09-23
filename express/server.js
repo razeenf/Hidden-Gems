@@ -3,6 +3,10 @@ import multer from "multer";
 import sharp from "sharp";
 import crypto from "crypto";
 import cors from "cors";
+import dotenv from "dotenv";
+import axios from "axios";
+
+dotenv.config();
 
 import { PrismaClient } from "@prisma/client";
 import { uploadFile, deleteFile, getObjectSignedUrl } from "./s3.js";
@@ -51,6 +55,44 @@ app.get("/api/posts/:cityName", async (req, res) => {
   }
 });
 
+//api endpoint to get nearby posts
+app.get("/api/posts/nearby/:latitude/:longitude", async (req, res) => {
+  const { latitude, longitude } = req.params;
+
+  try {
+    const geocodeResponse = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.GOOGLE_MAPS_API_KEY}`
+    );
+
+    const city = geocodeResponse.data.results[0].address_components.find(
+      (component) => component.types.includes("locality")
+    ).long_name;
+
+    console.log(city);
+
+    // Fetch the 5 most recent posts in the city
+    const posts = await prisma.post.findMany({
+      where: { city: city.toLowerCase() },
+      orderBy: { createdAt: "desc" },
+      take: 5,
+    });
+
+    for (let post of posts) {
+      console.log("called s3");
+      post.imageUrl = await getObjectSignedUrl(post.imageId);
+    }
+
+    if (posts.length > 0) {
+      res.send(posts);
+    } else {
+      res.send([]);
+    }
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).send("Error retrieving nearby posts.");
+  }
+});
+
 // api endpoint to check for new posts
 app.get("/api/posts/new/:id", async (req, res) => {
   const currentId = parseInt(req.params.id, 10);
@@ -83,7 +125,7 @@ app.post("/api/posts", upload.single("image"), async (req, res) => {
   const imageId = generateImageId();
 
   const fileBuffer = await sharp(file.buffer)
-    .resize({ height: 600, width: 550, fit: "cover" })
+    .resize({ height: 700, width: 400, fit: "cover" })
     .jpeg({ quality: 90 })
     .png({ compressionLevel: 9 })
     .toBuffer();

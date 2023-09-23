@@ -7,15 +7,55 @@ import notFound from '../../assets/notFound.png';
 
 export default function Explore() {
   const [searchValue, setSearchValue] = useState('');
-  const [data, setData] = useState([]);
+  const [recentPosts, setRecentPosts] = useState([]);
+  const [nearbyPosts, setNearbyPosts] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
-  const isMounted = useRef(false); // Create a ref to track component mount state
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+    const storedRecent = localStorage.getItem('explore-recent');
+    const storedNearby = localStorage.getItem('explore-nearby');
+    if (storedRecent) {
+      setRecentPosts(JSON.parse(storedRecent));
+      setNearbyPosts(JSON.parse(storedNearby))
+      const id = JSON.parse(storedRecent)[0].id;
+      checkForNewPosts(id);
+    } else {
+      getPosts();
+    }
+  }, []);
 
   async function getPosts() {
-    const result = await axios.get("/api/posts");
-    if (result.data.length > 0) {
-      setData(result.data);
-      localStorage.setItem('exploreData', JSON.stringify(result.data));
+    const recentPosts = await axios.get("/api/posts");
+
+    if (recentPosts.data.length > 0) {
+      setRecentPosts(recentPosts.data);
+      localStorage.setItem('explore-recent', JSON.stringify(recentPosts.data));
+    }
+
+    try {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+          const { latitude, longitude } = position.coords;
+
+          const nearbyPosts = await axios.get(`/api/posts/nearby/${latitude}/${longitude}`);
+
+          if (nearbyPosts.data.length > 0) {
+            setNearbyPosts(nearbyPosts.data);
+            localStorage.setItem('explore-nearby', JSON.stringify(nearbyPosts.data));
+          }
+        }, (error) => {
+          console.error('Error getting geolocation:', error.message);
+        });
+      } else {
+        console.error('Geolocation is not supported in this browser.');
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
     }
   }
 
@@ -23,65 +63,23 @@ export default function Explore() {
     const result = await axios.get("/api/posts/new/" + id);
     const posts = result.data;
     if (posts.length > 0) {
-      const cachedExploreData = JSON.parse(localStorage.getItem('exploreData'));
+      const cachedExploreData = JSON.parse(localStorage.getItem('explore-recent'));
       for (const post of posts.reverse()) {
         cachedExploreData.unshift(post);
         if (cachedExploreData.length > 5) {
           cachedExploreData.pop();
         }
-        //
+        // if new post is a city thats been cached add to cache
         const cachedCityData = JSON.parse(localStorage.getItem('queriedData-' + post.city.toLowerCase()));
         if (cachedCityData) {
           cachedCityData.unshift(post);
           localStorage.setItem('queriedData-' + post.city.toLowerCase(), JSON.stringify(cachedCityData));
         }
       }
-      localStorage.setItem('exploreData', JSON.stringify(cachedExploreData));
-      setData(cachedExploreData);
+      localStorage.setItem('explore-recent', JSON.stringify(cachedExploreData));
+      setRecentPosts(cachedExploreData);
     }
   };
-
-  // useEffect(() => {
-  //   if (!isMounted.current) {
-  //     isMounted.current = true;
-  //     return;
-  //   }
-
-  //   const storedData = localStorage.getItem('exploreData');
-
-  //   if (storedData) {
-  //     const storedData = JSON.parse(storedData);
-
-  //     // Check if the stored data has an expiration timestamp
-  //     if (storedData.expiration && new Date().getTime() >= storedData.expiration) {
-  //       // Data is expired, call getPosts to fetch new data
-  //       getPosts();
-  //     } else {
-  //       // Data is still valid, use it
-  //       setData(storedData);
-  //       const id = storedData[0].id;
-  //       checkForNewPosts(id);
-  //     }
-  //   } else {
-  //     // No cached data found, call getPosts to fetch data
-  //     getPosts();
-  //   }
-  // }, []);
-
-  useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      return;
-    }
-    const storedData = localStorage.getItem('exploreData');
-    if (storedData) {
-      setData(JSON.parse(storedData));
-      const id = JSON.parse(storedData)[0].id;
-      checkForNewPosts(id);
-    } else {
-      getPosts();
-    }
-  }, []);
 
   return (
     <>
@@ -92,7 +90,7 @@ export default function Explore() {
             borderRadius: '15px',
             boxShadow: 'none',
             width: '100%',
-            margin: '40px auto',
+            margin: '35px auto',
           }}
           placeholder='Enter a City'
           cancelOnEscape={true}
@@ -113,16 +111,16 @@ export default function Explore() {
           <>
             <h3>Recent Gems</h3>
             <div className="explore-card-grid">
-              <Card cardData={data} />
+              <Card cardData={recentPosts} />
             </div>
             <h3>Gems Near You</h3>
-            <div className="explore-card-grid">
-              <Card cardData={data} />
-            </div>
-            <h3>Popular Gems</h3>
-            <div className="explore-card-grid">
-              <Card cardData={data} />
-            </div>
+            {nearbyPosts.length > 0 ? (
+              <div className="explore-card-grid">
+                <Card cardData={nearbyPosts} />
+              </div>
+            ) : (
+              <p className='location-off'>Nothing near you :(</p>
+            )}
           </>
         )}
       </div>
@@ -148,7 +146,7 @@ function SearchResult({ city }) {
   }, [city]);
 
   async function getPosts() {
-    const result = await axios.get("/api/posts/" + city);
+    const result = await axios.get(`/api/posts/${city}`);
     if (result.data.length > 0) {
       setQueriedData(result.data); // if result.data is not empty, set state
       localStorage.setItem('queriedData-' + city.toLowerCase(), JSON.stringify(result.data));

@@ -14,14 +14,14 @@ body {
 }
 
 .content {
-    min-height: calc(100vh - 192px);
+    min-height: calc(100vh - 180px);
     padding-top: 87px;
     margin: 0 10%;
 }
 
 @media (max-width: 800px) {
     .content {
-        padding: 70px 0 0 0;
-        margin: 0 5%;
+        padding-top: 70px;
+        margin: 0 7%;
     }
 }

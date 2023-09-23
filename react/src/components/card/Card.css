@@ -13,7 +13,7 @@
 }
 
 .card-image {
-    height: 0;
+    height: 50px;
     padding-bottom: 100%;
     background-size: cover;
     background-position: center;
@@ -88,7 +88,7 @@
 .modal-name {
     font-weight: bolder;
     font-size: 25px;
-    margin: 20px 0 0 0;
+    margin: 0px;
 }
 
 .modal-location {
@@ -100,18 +100,34 @@
     font-size: 15px;
 }
 
-.modal-close {
-    align-self: flex-start;
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-buttons>button {
     margin: 10px;
-    padding: 0;
     border: none;
     background-color: transparent;
     cursor: pointer;
 }
 
-.close-icon {
-    font-size: 24px;
-    line-height: 1;
+.modal-buttons>button:hover {
+    opacity: 0.6;
+}
+
+.modal-buttons>button>span {
+    font-size: 21px;
+    line-height: 1.5;
+}
+
+.saved-button {
+    opacity: 1;
+    color: #85bd42;
+}
+
+.close-button:hover {
+    color: rgb(255, 0, 0);
 }
 
 @media (max-width: 800px) {
@@ -133,7 +149,7 @@
     .modal-image {
         border-radius: 15px 15px 0 0;
         width: 100%;
-        max-height: 300px;
+        max-height: 50%;
     }
 
     .modal-close {
@@ -142,6 +158,12 @@
 
     .modal-info::-webkit-scrollbar {
         display: none;
+    }
+
+    .modal-buttons {
+        display: flex;
+        flex-direction: row;
+        align-self: center;
     }
 }
 

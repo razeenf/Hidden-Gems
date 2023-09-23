@@ -12,8 +12,6 @@ export default function LoginPage() {
     event.preventDefault();
   };
 
-  const word = "Sign up";
-
   return (
     <div className="login-wrapper">
       <div className="header">
@@ -24,7 +22,7 @@ export default function LoginPage() {
 
       <div className="login-box">
         <form onSubmit={handleSubmit}>
-          <h3>{word} with your email</h3>
+          <h3>Login with your email</h3>
 
           <GoogleOAuthProvider clientId="<your_client_id>">
             <GoogleLogin
@@ -60,7 +58,7 @@ export default function LoginPage() {
             />
           </div>
           <button type="submit" className="form-button">
-            {word}
+            Login
           </button>
         </form>
       </div>
@@ -68,7 +66,7 @@ export default function LoginPage() {
         Don't have an account yet? <a href="#">Sign up</a>
       </p> */}
       <p className="switch-link">
-        Already have an account? <a href="#">Log in</a>
+        Already have an account? <a href="#">Sign up</a>
       </p>
 
     </div>

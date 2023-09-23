@@ -34,7 +34,7 @@ export default function User() {
   }, []);
 
   async function getPosts() {
-    const result = await axios.get("/api/posts/toronto");
+    const result = await axios.get("/api/posts/supernova");
     if (result.data.length > 0) {
       setuserPosts(result.data); // if result.data is not empty, set state
       localStorage.setItem('userPosts', JSON.stringify(result.data));
