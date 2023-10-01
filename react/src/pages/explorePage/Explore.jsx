@@ -19,24 +19,32 @@ export default function Explore() {
     }
     const storedRecent = localStorage.getItem('explore-recent');
     const storedNearby = localStorage.getItem('explore-nearby');
-    if (storedRecent) {
+    if (storedRecent && storedNearby) {
       setRecentPosts(JSON.parse(storedRecent));
       setNearbyPosts(JSON.parse(storedNearby))
       const id = JSON.parse(storedRecent)[0].id;
       checkForNewPosts(id);
+    } else if (storedRecent) {
+      setRecentPosts(JSON.parse(storedRecent));
+      getNearbyPosts();
+      const id = JSON.parse(storedRecent)[0].id;
+      checkForNewPosts(id);
     } else {
-      getPosts();
+      getRecentPosts();
+      getNearbyPosts();
     }
   }, []);
 
-  async function getPosts() {
+  async function getRecentPosts() {
     const recentPosts = await axios.get("/api/posts");
 
     if (recentPosts.data.length > 0) {
       setRecentPosts(recentPosts.data);
       localStorage.setItem('explore-recent', JSON.stringify(recentPosts.data));
     }
+  }
 
+  async function getNearbyPosts() {
     try {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (position) => {
