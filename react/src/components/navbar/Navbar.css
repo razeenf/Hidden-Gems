@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: space-between;
     color: black;
-    z-index: 1000;
+    z-index: 100;
     position: fixed;
     width: 100%;
     margin: auto;
@@ -113,26 +113,25 @@
 
 .burger-dropdown {
     position: fixed;
-    top: 0;
-    right: 100px;
-    /* Initially hidden outside the viewport */
-    width: 250px;
-    text-align: center;
-    height: 100%;
+    top: 0px;
+    right: 0px;
+    width: 100%;
     background-color: #dee8da;
-    /* Background color of the menu */
-    padding-top: 60px;
-    /* Adjust as needed */
-    z-index: 1000;
-    /* Ensure it's on top of other content */
+    z-index: -1;
     transition: right 0.3s ease;
-    /* Transition for sliding animation */
+    display: flex;
+    justify-content: center;
+    padding-top: 65px;
+    padding-bottom: 20px;
 }
 
 .burger-nav-links {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin: 0 100px;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
 }
 
 .burger-nav-links li {
@@ -142,7 +141,7 @@
 .burger-nav-links a {
     text-decoration: none;
     font-size: 18px;
-    padding: 10px 20px;
+    padding: 10px 15px;
     display: block;
     color: black;
 }
@@ -211,6 +210,5 @@
     .burger-menu>svg {
         width: 25px;
     }
-
 
 }

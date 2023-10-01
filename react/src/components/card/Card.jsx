@@ -21,6 +21,8 @@ export default function Card({ cardData }) {
       {cardData.map(card => (
         <div className="card" key={card.id} onClick={() => openModal(card)}>
           <div className="card-image" style={{ backgroundImage: `url(${card.imageUrl})` }}>
+            {/* <img src={card.imageUrl} alt="" loading="lazy" /> */}
+            {/* this works but we need to fix css for it so ill add it later */}
             <div className="banner">
               <p className="card-name">{card.name}</p>
             </div>
