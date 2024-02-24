@@ -14,7 +14,7 @@ export default function Footer() {
           <FontAwesomeIcon icon={faGithub} className="icon" />
         </a>
       </div>
-      <p className="copyright">© 2023 Razeen Faruque</p>
+      <p className="copyright">© 2024 Razeen Faruque</p>
     </footer>
   );
 }

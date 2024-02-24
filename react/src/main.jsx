@@ -10,21 +10,13 @@ import Explore from "./pages/explorePage/Explore";
 import Share from "./pages/sharePage/Share";
 import LoginPage from "./pages/loginPage/LoginPage";
 import UserProfile from "./pages/userPage/UserProfile"
+import NotFoundPage from "./pages/errorPages/404";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/user/*"
-          element={
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/:id" element={<UserProfile />} />
-            </Routes>
-          }
-        />
         <Route
           path="/*"
           element={
@@ -35,10 +27,20 @@ root.render(
                   <Route path="/" element={<Home />} />
                   <Route path="/explore" element={<Explore />} />
                   <Route path="/share" element={<Share />} />
+                  <Route path="/*" element={<NotFoundPage />} />
                 </Routes>
               </div>
               <Footer />
             </>
+          }
+        />
+        <Route
+          path="/user/*"
+          element={
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/:id" element={<UserProfile />} />
+            </Routes>
           }
         />
       </Routes>

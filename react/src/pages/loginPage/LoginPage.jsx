@@ -2,14 +2,36 @@ import logo from '../../assets/logo.png';
 import './LoginPage.css';
 import { useState } from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [mode, setMode] = useState('login');
 
   const handleSubmit = async event => {
     event.preventDefault();
+
+    // determinr the api endpoint based on the mode
+    const endpoint = mode === 'login' ? '/api/user/login' : '/api/user/register';
+
+    try {
+      const response = await axios.post(endpoint, { email, password });
+      const { token } = response.data;
+      document.cookie = `jwt=${token}; Secure; SameSite=Strict; HttpOnly`; //storing jwt in HttpOnly cookie
+
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      console.error('Error:', error.response.data.error);
+      // display incorrect email or password
+    }
+  };
+
+  const toggleMode = () => {
+    setMode(mode === 'login' ? 'signup' : 'login');
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -22,7 +44,7 @@ export default function LoginPage() {
 
       <div className="login-box">
         <form onSubmit={handleSubmit}>
-          <h3>Login with your email</h3>
+          <h3>{mode === 'login' ? 'Login' : 'Sign Up'} with your email</h3>
 
           <GoogleOAuthProvider clientId="<your_client_id>">
             <GoogleLogin
@@ -57,16 +79,19 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
           <button type="submit" className="form-button">
-            Login
+            {mode === 'login' ? 'Login' : 'Sign Up'}
           </button>
+
         </form>
       </div>
-      {/* <p className="switch-link">
-        Don't have an account yet? <a href="#">Sign up</a>
-      </p> */}
+
       <p className="switch-link">
-        Already have an account? <a href="#">Sign up</a>
+        {mode === 'login' ? "Don't have an account yet? " : "Already have an account? "}
+        <a href="#" className="switch-button" onClick={toggleMode}>
+          {mode === 'login' ? 'Sign up' : 'Login'}
+        </a>
       </p>
 
     </div>

@@ -16,6 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-oauth/google": "^0.11.1",
     "axios": "^1.4.0",
+    "jwt-decode": "^4.0.0",
     "material-ui-search-bar": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
