@@ -36,7 +36,7 @@ export default function Explore() {
   }, []);
 
   async function getRecentPosts() {
-    const recentPosts = await axios.get("/api/posts");
+    const recentPosts = await axios.get("/api/posts/recent");
 
     if (recentPosts.data.length > 0) {
       setRecentPosts(recentPosts.data);

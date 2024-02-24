@@ -23,7 +23,7 @@ const s3Client = new S3Client({
   },
 });
 
-export function uploadFile(fileBuffer, fileName, mimetype) {
+export function uploadImage(fileBuffer, fileName, mimetype) {
   const uploadParams = {
     Bucket: bucketName,
     Body: fileBuffer,
@@ -34,7 +34,7 @@ export function uploadFile(fileBuffer, fileName, mimetype) {
   return s3Client.send(new PutObjectCommand(uploadParams));
 }
 
-export function deleteFile(fileName) {
+export function deleteImage(fileName) {
   const deleteParams = {
     Bucket: bucketName,
     Key: fileName,
@@ -44,7 +44,8 @@ export function deleteFile(fileName) {
 }
 
 // https://aws.amazon.com/blogs/developer/generate-presigned-url-modular-aws-sdk-javascript/
-export async function getObjectSignedUrl(imageName) {
+// gets Object Signed Url
+export async function getImage(imageName) {
   const params = {
     Bucket: bucketName,
     Key: imageName,
