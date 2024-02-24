@@ -38,7 +38,7 @@ export default function Explore() {
   async function getRecentPosts() {
     const recentPosts = await axios.get("/api/posts/recent");
 
-    if (recentPosts.data.length > 0) {
+    if (recentPosts.status == 200) {
       setRecentPosts(recentPosts.data);
       localStorage.setItem('explore-recent', JSON.stringify(recentPosts.data));
     }
@@ -52,7 +52,7 @@ export default function Explore() {
 
           const nearbyPosts = await axios.get(`/api/posts/nearby/${latitude}/${longitude}`);
 
-          if (nearbyPosts.data.length > 0) {
+          if (nearbyPosts.status == 200) {
             setNearbyPosts(nearbyPosts.data);
             localStorage.setItem('explore-nearby', JSON.stringify(nearbyPosts.data));
           }
@@ -70,10 +70,13 @@ export default function Explore() {
   async function checkForNewPosts(id) {
     const result = await axios.get("/api/posts/new/" + id);
     const posts = result.data;
-    if (posts.length > 0) {
+
+    if (result.status == 200) {
       const cachedExploreData = JSON.parse(localStorage.getItem('explore-recent'));
+
       for (const post of posts.reverse()) {
         cachedExploreData.unshift(post);
+
         if (cachedExploreData.length > 5) {
           cachedExploreData.pop();
         }
@@ -84,6 +87,7 @@ export default function Explore() {
           localStorage.setItem('queriedData-' + post.city.toLowerCase(), JSON.stringify(cachedCityData));
         }
       }
+
       localStorage.setItem('explore-recent', JSON.stringify(cachedExploreData));
       setRecentPosts(cachedExploreData);
     }
@@ -155,7 +159,7 @@ function SearchResult({ city }) {
 
   async function getPosts() {
     const result = await axios.get(`/api/posts/${city}`);
-    if (result.data.length > 0) {
+    if (result.status === 200) {
       setQueriedData(result.data); // if result.data is not empty, set state
       localStorage.setItem('queriedData-' + city.toLowerCase(), JSON.stringify(result.data));
     } else {

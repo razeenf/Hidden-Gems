@@ -29,40 +29,40 @@ export default function FormPage() {
     formData.append('description', description);
     formData.append('image', imageFile);
 
-    // API call to the POST /posts endpoint
-    await axios.post("/api/posts", formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(response => {
-        if (response.status === 201) {
-          setSubmitted(true);
-        }
-      })
-      .catch(error => {
-        console.log("An error occurred:", error);
-      });
+    try {
+      // API call to the POST /upload endpoint
+      const response = await axios.post("/api/posts/upload", formData, { headers: { 'Content-Type': 'multipart/form-data' } });
 
-    if (imageFile.size <= 4 * 1024 * 1024) { // 4MB in bytes
-      swal({
-        icon: "success",
-        title: "Success!",
-        text: "Your post has been submitted.",
-        button: "OK",
-      });
-      setName('');
-      setAddress('');
-      setCity('');
-      setSelectedCategory('');
-      setDescription('');
-      setImageFile(null);
-    } else {
-      swal({
-        icon: "error",
-        title: "Error!",
-        text: "Please upload an image under 4MB.",
-        button: "OK",
-      });
-      setImageFile(null);
+      if (response.status === 201) {
+        swal({
+          icon: "success",
+          title: "Success!",
+          text: "Your post has been submitted.",
+          button: "OK",
+        });
+        setName('');
+        setAddress('');
+        setCity('');
+        setSelectedCategory('');
+        setDescription('');
+        setImageFile(null);
+        setSubmitted(true);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 413) {
+        swal({
+          icon: "error",
+          title: "Error!",
+          text: "Please upload an image under 4MB.",
+          button: "OK",
+        });
+        setImageFile(null);
+      } else {
+        console.log("An error occurred:", error);
+      }
     }
   };
+
 
   return (
     <>
@@ -132,7 +132,7 @@ export default function FormPage() {
             {imageFile ? (
               <div>{imageFile.name}</div>
             ) : (
-              <div><FontAwesomeIcon icon={faArrowUpFromBracket} style={{ color: "#000000" }} />&nbsp;&nbsp;Upload (Max 4MB)</div>
+              <div><FontAwesomeIcon icon={faArrowUpFromBracket} style={{ color: "#000000" }} />&nbsp;&nbsp;Upload (Max 5MB)</div>
             )}
             <input
               required
